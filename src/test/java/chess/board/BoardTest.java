@@ -1,10 +1,10 @@
 package chess.board;
 
+import static chess.pieces.Piece.*;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
-import chess.common.Color;
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import java.lang.reflect.Method;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BoardTest {
 
-    private Board<Pawn> board;
+    private Board<Piece> board;
 
     @BeforeEach
     void setUp() {
@@ -25,7 +25,7 @@ class BoardTest {
     @Test
     void create() {
         // given
-        Pawn white = new Pawn(Color.WHITE);
+        Piece white = createWhitePawn();
 
         // when
         board.add(white);
@@ -38,14 +38,14 @@ class BoardTest {
     @Test
     void findPawn() {
         // given
-        Pawn white = new Pawn(Color.WHITE);
-        Pawn black = new Pawn(Color.BLACK);
+        Piece white = createWhitePawn();
+        Piece black = createBlackPawn();
         board.add(white);
         board.add(black);
 
         // when
-        Pawn firstFindPiece = board.findPawn(0);
-        Pawn secondFindPiece = board.findPawn(1);
+        Piece firstFindPiece = board.findPawn(0);
+        Piece secondFindPiece = board.findPawn(1);
 
         // then
         assertAll(
@@ -60,7 +60,7 @@ class BoardTest {
     void add_compileError(String number) {
         assertThatCode(
                 () -> {
-                    Method addMethod = Board.class.getDeclaredMethod("add", Pawn.class);
+                    Method addMethod = Board.class.getDeclaredMethod("add", Piece.class);
                     addMethod.setAccessible(true);
                     addMethod.invoke(board, Integer.parseInt(number));
                 }).isInstanceOf(IllegalArgumentException.class);

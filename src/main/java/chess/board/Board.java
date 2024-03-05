@@ -1,19 +1,19 @@
 package chess.board;
 
+import static chess.common.Color.*;
+import static chess.pieces.Piece.*;
 import static chess.utils.StringUtils.*;
 
-import chess.common.Color;
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 
-public class Board <T extends Pawn> {
+public class Board <T extends Piece> {
     private static final int INIT_PAWN_COUNT = 8;
-    private final BiConsumer<Color, Color> PIECE_CONSUMER = (color1, color2) -> {
-        this.pieces.add((T) new Pawn(color1));
-        this.pieces.add((T) new Pawn(color2));
+    private final Runnable PAWN_CREATOR = () -> {
+        this.pieces.add((T) createWhitePawn());
+        this.pieces.add((T) createBlackPawn());
     };
     private static final String BLANK_PIECES = ".".repeat(INIT_PAWN_COUNT);
     private List<T> pieces = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Board <T extends Pawn> {
     public void initialize() {
         IntStream.range(0, INIT_PAWN_COUNT)
                 .forEach(i -> {
-                    PIECE_CONSUMER.accept(Color.WHITE, Color.BLACK);
+                    PAWN_CREATOR.run();
                 });
     }
 
@@ -41,7 +41,7 @@ public class Board <T extends Pawn> {
         StringBuilder builder = new StringBuilder();
 
         pieces.stream()
-                .filter(piece -> piece.getColor().equals(Color.WHITE))
+                .filter(piece -> piece.getColor().equals(WHITE))
                 .forEach(piece -> builder.append(piece.getRepresentation()));
 
         return builder.toString();
@@ -50,7 +50,7 @@ public class Board <T extends Pawn> {
         StringBuilder builder = new StringBuilder();
 
         pieces.stream()
-                .filter(piece -> piece.getColor().equals(Color.BLACK))
+                .filter(piece -> piece.getColor().equals(BLACK))
                 .forEach(piece -> builder.append(piece.getRepresentation()));
 
         return builder.toString();

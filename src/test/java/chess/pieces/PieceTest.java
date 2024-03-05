@@ -1,5 +1,7 @@
 package chess.pieces;
 
+import static chess.common.Color.*;
+import static chess.pieces.Piece.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,22 +13,21 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.EnumSource.Mode;
 
-class PawnTest {
+class PieceTest {
     @DisplayName("지정한 색상의 폰이 생성되어야 한다")
     @ParameterizedTest(name = "기물 색상: {0}")
-    @EnumSource(mode = Mode.INCLUDE, names = {"WHITE", "BLACK"})
+    @EnumSource(mode = Mode.INCLUDE, names = {"WHITE"})
     public void create(Color color) {
-        Pawn pawn = new Pawn(color);
+        Piece piece = createWhitePawn();
 
-        assertThat(pawn.getColor()).isEqualTo(color);
+        assertThat(piece.getColor()).isEqualTo(color);
     }
 
-    @DisplayName("색상을 주입받지 못해도 기본 색(white)으로 생성될 수 있다")
+    @DisplayName("기물은 기본 생성자로 생성될 수 없다")
     @Test
-    public void create_기본생성자() {
-        Pawn pawn = new Pawn();
-
-        assertThat(pawn.getColor()).isEqualTo(Color.WHITE);
+    public void not_allowed_기본생성자() {
+        // 컴파일 에러
+//        Piece piece = new Piece();
     }
 
     @DisplayName("색상을 갖는 폰은 출력용 문자를 나태날 수 있다")
@@ -34,8 +35,8 @@ class PawnTest {
     @CsvSource(value = "♙, ♟")
     void display(String whiteShape, String blackShape) {
         // given
-        Pawn white = new Pawn(Color.WHITE);
-        Pawn black = new Pawn(Color.BLACK);
+        Piece white = createWhitePawn();
+        Piece black = createBlackPawn();
 
         // when
         String whiteRepresentation = white.getRepresentation();
@@ -48,4 +49,18 @@ class PawnTest {
                 () -> assertThat(blackRepresentation).isEqualTo(blackShape)
         );
     }
+
+    @DisplayName("팩토리 메서드로 흰색 폰과 검정색 폰을 올바르게 생성할 수 있다")
+    @Test
+    void create_piece() {
+        verifyPiece(Piece.createWhitePawn(), WHITE, PieceShape.PAWN_WHITE);
+        verifyPiece(Piece.createBlackPawn(), BLACK, PieceShape.PAWN_BLACK);
+
+    }
+
+    private void verifyPiece(final Piece piece, final Color color, final PieceShape pieceShape) {
+        assertEquals(color, piece.getColor());
+        assertEquals(pieceShape.getUnicode(), piece.getRepresentation());
+    }
+
 }
