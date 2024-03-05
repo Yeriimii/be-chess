@@ -6,10 +6,18 @@ import chess.common.Color;
 import java.util.Arrays;
 
 public enum PieceShape {
-    PAWN_WHITE("♙", Piece.class, Color.WHITE),
-    PAWN_BLACK("♟", Piece.class, Color.BLACK),
     PAWN_WHITE("♙", ALLOWED_PAWN_NAME, Color.WHITE),
     PAWN_BLACK("♟", ALLOWED_PAWN_NAME, Color.BLACK),
+    KNIGHT_WHITE("♘", ALLOWED_KNIGHT_NAME, Color.WHITE),
+    KNIGHT_BLACK("♞", ALLOWED_KNIGHT_NAME, Color.BLACK),
+    BISHOP_WHITE("♗", ALLOWED_BISHOP_NAME, Color.WHITE),
+    BISHOP_BLACK("♝", ALLOWED_BISHOP_NAME, Color.BLACK),
+    ROOK_WHITE("♖", ALLOWED_ROOK_NAME, Color.WHITE),
+    ROOK_BLACK("♜", ALLOWED_ROOK_NAME, Color.BLACK),
+    QUEEN_WHITE("♕", ALLOWED_QUEEN_NAME, Color.WHITE),
+    QUEEN_BLACK("♛", ALLOWED_QUEEN_NAME, Color.BLACK),
+    KING_WHITE("♔", ALLOWED_KING_NAME, Color.WHITE),
+    KING_BLACK("♚", ALLOWED_KING_NAME, Color.BLACK),
     ;
 
     private final String unicode;
