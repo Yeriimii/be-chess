@@ -1,5 +1,7 @@
 package chess.board;
 
+import static chess.utils.StringUtils.*;
+
 import chess.common.Color;
 import chess.pieces.Pawn;
 import java.util.ArrayList;
@@ -57,14 +59,14 @@ public class Board <T extends Pawn> {
     public void print() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(BLANK_PIECES + "\n");
-        builder.append(getBlackPawnsResult() + "\n");
-        builder.append(BLANK_PIECES + "\n");
-        builder.append(BLANK_PIECES + "\n");
-        builder.append(BLANK_PIECES + "\n");
-        builder.append(BLANK_PIECES + "\n");
-        builder.append(getWhitePawnsResult() + "\n");
-        builder.append(BLANK_PIECES + "\n");
+        builder.append(appendNewLine(BLANK_PIECES));
+        builder.append(appendNewLine(getBlackPawnsResult()));
+        builder.append(appendNewLine(BLANK_PIECES));
+        builder.append(appendNewLine(BLANK_PIECES));
+        builder.append(appendNewLine(BLANK_PIECES));
+        builder.append(appendNewLine(BLANK_PIECES));
+        builder.append(appendNewLine(getWhitePawnsResult()));
+        builder.append(appendNewLine(BLANK_PIECES));
 
         System.out.println(builder);
     }
