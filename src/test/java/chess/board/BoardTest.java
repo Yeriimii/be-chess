@@ -1,7 +1,9 @@
 package chess.board;
 
+import static chess.common.Color.*;
 import static chess.pieces.Piece.*;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static chess.utils.StringUtils.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.pieces.Piece;
@@ -31,7 +33,7 @@ class BoardTest {
         board.add(white);
 
         // then
-        assertEquals(1, board.size());
+        assertEquals(1, board.pieceCount());
     }
 
     @DisplayName("체스판은 특정 기물의 위치를 알 수 있다")
@@ -75,5 +77,39 @@ class BoardTest {
         // then
         assertEquals("♙♙♙♙♙♙♙♙", board.getWhitePawnsResult());
         assertEquals("♟♟♟♟♟♟♟♟", board.getBlackPawnsResult());
+    }
+
+    @DisplayName("지정한 색상으로 폰이 아닌 기물들을 찾을 수 있다")
+    @Test
+    void getMajorPieceResultByColor() {
+        // given
+        board.initialize();
+
+        // when
+        String blackMajorPieces = board.getMajorPieceResultByColor(BLACK);
+        String whiteMajorPieces = board.getMajorPieceResultByColor(WHITE);
+
+        // then
+        assertThat(blackMajorPieces).isEqualTo("♜♞♝♛♚♝♞♜");
+        assertThat(whiteMajorPieces).isEqualTo("♖♘♗♔♕♗♘♖");
+    }
+
+    @DisplayName("체스판을 초기화하면 전체 기물이 준비된다")
+    @Test
+    void initialize_all_pieces() {
+        // given & when
+        board.initialize();
+        String blankRank = appendNewLine(".".repeat(8));
+
+        // then
+        assertEquals(32, board.pieceCount());
+        assertEquals(
+                appendNewLine("♜♞♝♛♚♝♞♜") +
+                        appendNewLine("♟♟♟♟♟♟♟♟") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        appendNewLine("♙♙♙♙♙♙♙♙") +
+                        appendNewLine("♖♘♗♔♕♗♘♖"),
+                board.showBoard()
+        );
     }
 }
