@@ -78,4 +78,12 @@ public class Piece {
     public String getRepresentation() {
         return PieceShape.find(this).getUnicode();
     }
+
+    public boolean isBlack() {
+        return color.equals(BLACK);
+    }
+
+    public boolean isWhite() {
+        return color.equals(WHITE);
+    }
 }

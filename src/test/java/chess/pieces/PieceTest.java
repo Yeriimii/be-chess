@@ -63,4 +63,17 @@ class PieceTest {
         assertEquals(pieceShape.getUnicode(), piece.getRepresentation());
     }
 
+    @DisplayName("기물은 자신이 흰색인지 검은색인지 알 수 있다")
+    @Test
+    void checkPieceColor() {
+        // given
+        Piece blackPawn = createBlackPawn();
+        Piece whitePawn = createWhitePawn();
+
+        // when & then
+        assertTrue(blackPawn.isBlack());
+        assertTrue(whitePawn.isWhite());
+        assertFalse(blackPawn.isWhite());
+        assertFalse(whitePawn.isBlack());
+    }
 }
