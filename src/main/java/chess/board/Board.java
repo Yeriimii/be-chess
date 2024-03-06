@@ -35,15 +35,15 @@ public class Board <T extends Piece> {
 
     private void initializePieces(Color color) {
         if (color.equals(BLACK)) {
-            createMajorPieces(color);
+            createMajor(color);
             createPawns(color);
         } else {
             createPawns(color);
-            createMajorPieces(color);
+            createMajor(color);
         }
     }
 
-    private void createMajorPieces(Color color) {
+    private void createMajor(Color color) {
         pieces.add(createPiece(color, ALLOWED_ROOK_NAME));
         pieces.add(createPiece(color, ALLOWED_KNIGHT_NAME));
         pieces.add(createPiece(color, ALLOWED_BISHOP_NAME));
@@ -70,54 +70,38 @@ public class Board <T extends Piece> {
         return (T) create(color, pieceName);
     }
 
-    public String getWhitePawnsResult() {
+    public String getPawnsResultByColor(Color color) {
         StringBuilder builder = new StringBuilder();
 
         pieces.stream()
-                .filter(piece -> isPawnPiece(WHITE, piece))
-                .forEach(piece -> builder.append(piece.getRepresentation()));
-
-        return builder.toString();
-    }
-    public String getBlackPawnsResult() {
-        StringBuilder builder = new StringBuilder();
-
-        pieces.stream()
-                .filter(piece -> isPawnPiece(BLACK, piece))
+                .filter(piece -> isPawn(piece) && isSameColor(color, piece))
                 .forEach(piece -> builder.append(piece.getRepresentation()));
 
         return builder.toString();
     }
 
-    private boolean isPawnPiece(Color color, T piece) {
-        return piece.getColor().equals(color) && piece.getName().equals(ALLOWED_PAWN_NAME);
-    }
-
-    public String getMajorPieceResultByColor(Color color) {
+    public String getMajorResultByColor(Color color) {
         StringBuilder builder = new StringBuilder();
 
         pieces.stream()
-                .filter(piece -> isMajorPiece(color, piece))
+                .filter(piece -> !isPawn(piece) && isSameColor(color, piece))
                 .forEach(piece -> builder.append(piece.getRepresentation()));
 
         return builder.toString();
     }
 
-    private boolean isMajorPiece(Color color, T piece) {
-        return piece.getColor().equals(color) && !piece.getName().equals(ALLOWED_PAWN_NAME);
+    private boolean isPawn(T piece) {
+        return piece.getName().equals(ALLOWED_PAWN_NAME);
+    }
+
+    private boolean isSameColor(Color color, T piece) {
+        return piece.getColor().equals(color);
     }
 
     public void print() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(appendNewLine(getMajorPieceResultByColor(BLACK)));
-        builder.append(appendNewLine(getBlackPawnsResult()));
-        builder.append(appendNewLine(BLANK_PIECES));
-        builder.append(appendNewLine(BLANK_PIECES));
-        builder.append(appendNewLine(BLANK_PIECES));
-        builder.append(appendNewLine(BLANK_PIECES));
-        builder.append(appendNewLine(getWhitePawnsResult()));
-        builder.append(appendNewLine(getMajorPieceResultByColor(WHITE)));
+        getBoardRepresentation(builder);
 
         System.out.println(builder);
     }
@@ -125,15 +109,16 @@ public class Board <T extends Piece> {
     public String showBoard() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(appendNewLine(getMajorPieceResultByColor(BLACK)));
-        builder.append(appendNewLine(getBlackPawnsResult()));
-        builder.append(appendNewLine(BLANK_PIECES));
-        builder.append(appendNewLine(BLANK_PIECES));
-        builder.append(appendNewLine(BLANK_PIECES));
-        builder.append(appendNewLine(BLANK_PIECES));
-        builder.append(appendNewLine(getWhitePawnsResult()));
-        builder.append(appendNewLine(getMajorPieceResultByColor(WHITE)));
+        getBoardRepresentation(builder);
 
         return builder.toString();
+    }
+
+    private void getBoardRepresentation(StringBuilder builder) {
+        builder.append(appendNewLine(getMajorResultByColor(BLACK)));
+        builder.append(appendNewLine(getPawnsResultByColor(BLACK)));
+        IntStream.range(0, 4).forEach(i -> builder.append(appendNewLine(BLANK_PIECES)));
+        builder.append(appendNewLine(getPawnsResultByColor(WHITE)));
+        builder.append(appendNewLine(getMajorResultByColor(WHITE)));
     }
 }

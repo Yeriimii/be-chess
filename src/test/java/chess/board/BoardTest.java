@@ -75,8 +75,8 @@ class BoardTest {
         board.initialize();
 
         // then
-        assertEquals("♙♙♙♙♙♙♙♙", board.getWhitePawnsResult());
-        assertEquals("♟♟♟♟♟♟♟♟", board.getBlackPawnsResult());
+        assertEquals("♙♙♙♙♙♙♙♙", board.getPawnsResultByColor(WHITE));
+        assertEquals("♟♟♟♟♟♟♟♟", board.getPawnsResultByColor(BLACK));
     }
 
     @DisplayName("지정한 색상으로 폰이 아닌 기물들을 찾을 수 있다")
@@ -86,8 +86,8 @@ class BoardTest {
         board.initialize();
 
         // when
-        String blackMajorPieces = board.getMajorPieceResultByColor(BLACK);
-        String whiteMajorPieces = board.getMajorPieceResultByColor(WHITE);
+        String blackMajorPieces = board.getMajorResultByColor(BLACK);
+        String whiteMajorPieces = board.getMajorResultByColor(WHITE);
 
         // then
         assertThat(blackMajorPieces).isEqualTo("♜♞♝♛♚♝♞♜");
