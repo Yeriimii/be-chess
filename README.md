@@ -40,4 +40,8 @@
 
 # 실행 흐름
 ## `end` 명령어를 입력하기 전까지 `start` 명령어를 입력받을 수 있다
+### 폰 초기화 결과
 <img width="264" alt="backend1-chess-1" src="https://gist.github.com/assets/87357932/e40f3e33-b805-401a-8df9-23a4b3f56354">
+
+### 체스판 전체 초기화 결과
+<img width="263" alt="backend1-chess-2" src="https://gist.github.com/assets/87357932/42d31602-b0fc-42ab-bdec-fadd7de6694a">
