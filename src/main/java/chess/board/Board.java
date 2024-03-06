@@ -47,15 +47,8 @@ public class Board <T extends Piece> {
         pieces.add(createPiece(color, ALLOWED_ROOK_NAME));
         pieces.add(createPiece(color, ALLOWED_KNIGHT_NAME));
         pieces.add(createPiece(color, ALLOWED_BISHOP_NAME));
-
-        if (color.equals(BLACK)) {
-            pieces.add(createPiece(color, ALLOWED_QUEEN_NAME));
-            pieces.add(createPiece(color, ALLOWED_KING_NAME));
-        } else {
-            pieces.add(createPiece(color, ALLOWED_KING_NAME));
-            pieces.add(createPiece(color, ALLOWED_QUEEN_NAME));
-        }
-
+        pieces.add(createPiece(color, ALLOWED_QUEEN_NAME));
+        pieces.add(createPiece(color, ALLOWED_KING_NAME));
         pieces.add(createPiece(color, ALLOWED_BISHOP_NAME));
         pieces.add(createPiece(color, ALLOWED_KNIGHT_NAME));
         pieces.add(createPiece(color, ALLOWED_ROOK_NAME));
